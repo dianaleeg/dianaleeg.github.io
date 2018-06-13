@@ -1,3 +1,21 @@
+.fb{
+		width:3%;
+		height: auto;
+		padding: 5px;
+		padding-top:30px;
+	}
+.insta{
+	width:3%;
+	height: auto;
+	padding: 5px;
+	padding-top:30px;
+}
+.linkedin{
+	width:3%;
+	height: auto;
+	padding: 5px;
+	padding-top:30px;
+}
 body {
     background-color: #FFF00;
 	}
