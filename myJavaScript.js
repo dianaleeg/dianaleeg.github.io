@@ -15,6 +15,9 @@ function myFunction() {
     navbar.classList.remove("sticky");
   }
 }
+ $ curl \
+      -H 'Authorization: Bearer $TOKEN' \
+      'https://api.wit.ai/message?v=20170307&q=hello'
 
 $.ajax({
   url: 'https://api.wit.ai/message',
