@@ -20,7 +20,8 @@ $.ajax({
   url: 'https://api.wit.ai/message',
   data: {
     'q': 'set an alarm in 10min',
-    'access_token' : 'MY_WIT_TOKEN'
+    'access_token' :WUIXYS5FOY4ESPSGLGSVR2I4FPIPZKDW
+
   },
   dataType: 'jsonp',
   method: 'GET',
