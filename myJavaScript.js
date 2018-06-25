@@ -16,14 +16,14 @@ function myFunction() {
   }
 }
  $ curl \
-      -H 'Authorization: Bearer $TOKEN' \
+      -H 'Authorization: Bearer WUIXYS5FOY4ESPSGLGSVR2I4FPIPZKDW' \
       'https://api.wit.ai/message?v=20170307&q=hello'
 
 $.ajax({
   url: 'https://api.wit.ai/message',
   data: {
     'q': 'set an alarm in 10min',
-    'access_token' :WUIXYS5FOY4ESPSGLGSVR2I4FPIPZKDW
+    'access_token' :'WUIXYS5FOY4ESPSGLGSVR2I4FPIPZKDW'
 
   },
   dataType: 'jsonp',
