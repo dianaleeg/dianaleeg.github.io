@@ -1,62 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catholic Spirituality Quiz</title>
+  <meta charset="UTF-8">
+  <title>Catholic Spirituality</title>
+  <link href="https://fonts.googleapis.com/css2?family=Droid+Serif&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
-    }
-
-    header {
+      font-family: 'Droid Serif', serif;
+      background-color: #FAFAFA;
+      color: #2D2D2D;
       text-align: center;
-      padding: 2rem 1rem;
-      background-color: #ffffff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      padding: 2rem;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
+    img.logo {
+      max-width: 150px;
+      margin-bottom: 1rem;
     }
 
-    header p {
-      font-size: 1rem;
-      color: #666;
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
     }
 
-    .form-container {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 1rem;
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
     }
 
     iframe {
       width: 100%;
-      height: 6958px;
+      max-width: 700px;
+      height: 7200px;
       border: none;
     }
 
-    @media (max-width: 768px) {
-      iframe {
-        height: 7500px; /* More vertical space on small devices */
-      }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    a {
+      color: #496057;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🕊️ Catholic Spirituality Quiz</h1>
-    <p>Discover which Catholic spirituality best fits your soul.</p>
-  </header>
+  <img src="spirituality.png" alt="Catholic Spirituality Logo" class="logo">
+  <h1>Catholic Spirituality</h1>
+  <p>Discover which spiritual tradition resonates with your soul.</p>
 
-  <div class="form-container">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeC8Upoi-6uIA9Bh1ZW8cDUc_TskYO3YAh5eq8nGUrmeHGCrA/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-  </div>
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeC8Upoi-6uIA9Bh1ZW8cDUc_TskYO3YAh5eq8nGUrmeHGCrA/viewform?embedded=true">Loading…</iframe>
+
+  <footer>
+    Not a comprehensive guide. Learn more about <a href="#resources">Catholic orders and spirituality</a>.
+  </footer>
 </body>
 </html>
