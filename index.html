@@ -58,6 +58,23 @@
   <p>Discover which spiritual tradition resonates with your soul.</p>
 
   <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeC8Upoi-6uIA9Bh1ZW8cDUc_TskYO3YAh5eq8nGUrmeHGCrA/viewform?embedded=true">Loading…</iframe>
+  <script>
+    const iframe = document.querySelector("iframe");
+
+    const observer = new MutationObserver(() => {
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const confirmationText = iframeDoc.body.innerText || "";
+        if (confirmationText.includes("Your response has been recorded")) {
+          window.location.href = "/thankyou.html";
+        }
+      } catch (e) {
+        // Ignore cross-origin errors
+      }
+    });
+
+    observer.observe(iframe, { attributes: true, childList: true, subtree: true });
+  </script>
 
   <footer>
     Not a comprehensive guide. Learn more about <a href="#resources">Catholic orders and spirituality</a>.
