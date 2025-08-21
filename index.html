@@ -208,11 +208,11 @@
           body: JSON.stringify(data)
         });
 
-        if (response.ok) {
+        if (res.ok) {
           window.location.href = "/thankyou.html";  // 👈 Redirect here
         } 
         else {
-          const result = await response.json();
+          const result = await res.json();
           alert("Something went wrong: " + result.message);
         }
 
