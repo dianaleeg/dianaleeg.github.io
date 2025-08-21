@@ -115,6 +115,15 @@
       border-radius: 4px;
       border: 1px solid #ccc;
     }
+
+    #loadingMessage {
+      display: none;
+      text-align: center;
+      margin-top: 1rem;
+      font-style: italic;
+      color: #0078d7;
+    }
+
   </style>
 </head>
 <body>
@@ -136,8 +145,9 @@
       <p>Email Address:</p>
       <input type="email" name="email" required />
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit" id="submitBtn">Submit</button>
   </form>
+  <div id="loadingMessage">Submitting your answers...</div>
 
   <div id="results"></div>
 
@@ -198,25 +208,42 @@
       questionsDiv.appendChild(qDiv);
     });
 
-    document.getElementById('quizForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target).entries());
-      try{
-        const res = await fetch(webhookURL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+document.getElementById('quizForm').addEventListener('submit', async e => {
+  e.preventDefault();
 
-        if (res.ok) {
-          window.location.href = "/thankyou.html";  
-          return;
-        } 
-      } 
-      catch (err) {
-        alert("Submission failed: " + err.message);
+  const submitBtn = document.getElementById('submitBtn');
+  const loadingMsg = document.getElementById('loadingMessage');
+
+  // Disable button and show loading
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+  loadingMsg.style.display = 'block';
+
+  const data = Object.fromEntries(new FormData(e.target).entries());
+
+    try {
+      const res = await fetch(webhookURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        window.location.href = "/thankyou.html";
+        return;  // stop execution
+      } else {
+        const result = await res.json();
+        alert("Something went wrong: " + result.message);
       }
-    });
+    } catch (err) {
+      alert("Submission failed: " + err.message);
+    } finally {
+      // Restore button state only if not redirecting
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit';
+      loadingMsg.style.display = 'none';
+    }
+  });
   </script>
 </body>
 </html>
