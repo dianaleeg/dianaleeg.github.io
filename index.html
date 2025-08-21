@@ -147,7 +147,6 @@
     </div>
     <button type="submit" id="submitBtn">Submit</button>
   </form>
-  <div id="loadingMessage">Submitting your answers... This will take about 15 secs.</div>
 
   <div id="results"></div>
 
@@ -212,11 +211,8 @@
     e.preventDefault();
 
     const submitBtn = document.getElementById('submitBtn');
-    const loadingMsg = document.getElementById('loadingMessage');
-
     submitBtn.disabled = true;
     submitBtn.textContent = 'Submitting...';
-    loadingMsg.style.display = 'block';
 
     const data = Object.fromEntries(new FormData(e.target).entries());
 
