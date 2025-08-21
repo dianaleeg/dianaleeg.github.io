@@ -209,27 +209,9 @@
         });
 
         if (res.ok) {
-          window.location.href = "/thankyou.html";  // 👈 Redirect here
+          window.location.href = "/thankyou.html";  
+          return;
         } 
-        else {
-          const result = await res.json();
-          alert("Something went wrong: " + result.message);
-        }
-
-        const json = await res.json();
-        if (json.status !== 'success') return alert('Submission error: ' + json.message);
-
-        document.getElementById('quizForm').style.display = 'none';
-        const { normalized_scores, top_3 } = json;
-        document.getElementById('results').style.display = 'block';
-        document.getElementById('results').innerHTML = `
-          <h2>Your Top Spiritualities</h2>
-          <ol>
-            ${top_3.map(s => `<li>${s[0]} (${s[1]})</li>`).join('')}
-          </ol>
-          <h3>All Scores:</h3>
-          <pre>${JSON.stringify(normalized_scores, null, 2)}</pre>
-        `;
       } 
       catch (err) {
         alert("Submission failed: " + err.message);
