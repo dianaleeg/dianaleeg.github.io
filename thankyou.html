@@ -3,36 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>Thank You</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Droid+Serif&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     body {
       margin: 0;
       font-family: 'Droid Serif', serif;
-      background-color: #FAFAFA;
-      color: #2D2D2D;
+      background-color: #fdfdfc;
+      color: #2d2d2d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
       padding: 2rem;
     }
 
-    img.logo {
-      max-width: 150px;
-      margin-top: 2rem;
-      margin-bottom: 1.5rem;
+    .container {
+      max-width: 600px;
+      padding: 2rem;
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
     }
 
-    h1 {
-      font-size: 2.5rem;
+    img.logo {
+      max-width: 120px;
       margin-bottom: 1rem;
     }
 
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: #3f4b3b;
+    }
+
     p {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: #555;
+      margin-bottom: 1rem;
     }
 
     a {
       color: #496057;
       text-decoration: none;
+      font-weight: bold;
     }
 
     a:hover {
@@ -41,9 +58,12 @@
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="Catholic Spirituality Logo" class="logo">
-  <h1>Thank You for Submitting!</h1>
-  <p>Your Catholic Spirituality results are being processed. You’ll receive an email shortly.</p>
-  <p><a href="/">Back to Home</a></p>
+  <div class="container">
+    <img src="spirituality.png" alt="Catholic Spirituality Logo" class="logo">
+    <h1>Thank You!</h1>
+    <p>Your Catholic Spirituality results are being processed.</p>
+    <p>You’ll receive an email shortly with your personalized results and recommendations.</p>
+    <p><a href="/">← Back to Home</a></p>
+  </div>
 </body>
 </html>
