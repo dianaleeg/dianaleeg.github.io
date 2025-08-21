@@ -29,13 +29,6 @@
       margin-bottom: 2rem;
     }
 
-    iframe {
-      width: 100%;
-      max-width: 700px;
-      height: 7200px;
-      border: none;
-    }
-
     footer {
       margin-top: 2rem;
       font-size: 0.9rem;
@@ -50,6 +43,78 @@
     a:hover {
       text-decoration: underline;
     }
+
+    form {
+      max-width: 800px;
+      width: 100%;
+      background: #fff;
+      padding: 2rem;
+      margin: 1rem auto;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .options {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .options label {
+      flex: 1;
+      text-align: center;
+      background: #f0f0f0;
+      padding: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .options input {
+      display: none;
+    }
+
+    .options input:checked + label {
+      background: #0078d7;
+      color: #fff;
+    }
+
+    button {
+      background: #0078d7;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      display: block;
+      margin: 2rem auto;
+    }
+
+    #results {
+      max-width: 800px;
+      margin: 1rem auto;
+      background: #e8f4ea;
+      padding: 2rem;
+      border-radius: 8px;
+      display: none;
+    }
+
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 <body>
@@ -57,27 +122,106 @@
   <h1>Catholic Spirituality</h1>
   <p>Discover which spiritual tradition resonates with your soul.</p>
 
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeC8Upoi-6uIA9Bh1ZW8cDUc_TskYO3YAh5eq8nGUrmeHGCrA/viewform?embedded=true">Loading…</iframe>
-  <script>
-    const iframe = document.querySelector("iframe");
+  <form id="quizForm">
+    <div id="questions"></div>
+    <div class="question">
+      <p>First Name:</p>
+      <input type="text" name="first_name" required />
+    </div>
+    <div class="question">
+      <p>Last Name:</p>
+      <input type="text" name="last_name" required />
+    </div>
+    <div class="question">
+      <p>Email Address:</p>
+      <input type="email" name="email" required />
+    </div>
+    <button type="submit">Submit</button>
+  </form>
 
-    const observer = new MutationObserver(() => {
-      try {
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        const confirmationText = iframeDoc.body.innerText || "";
-        if (confirmationText.includes("Your response has been recorded")) {
-          window.location.href = "/thankyou.html";
-        }
-      } catch (e) {
-        // Ignore cross-origin errors
-      }
-    });
-
-    observer.observe(iframe, { attributes: true, childList: true, subtree: true });
-  </script>
+  <div id="results"></div>
 
   <footer>
     Not a comprehensive guide. Learn more about <a href="#resources">Catholic orders and spirituality</a>.
   </footer>
+
+  <script>
+    const questions = [
+      "I feel closest to God in deep silence and solitude.",
+      "I find God in study, reading, and deep theological reflection.",
+      "My faith feels most alive when I am serving the poor and marginalized.",
+      "I prefer structured prayers, like the Liturgy of the Hours or the Rosary.",
+      "I believe worship should be joyful and engaging, with music and community.",
+      "I see my work and daily activities as a form of prayer.",
+      "Simplicity and detachment from material things are central to my spiritual life.",
+      "Teaching and intellectual discussion are an important part of my faith journey.",
+      "I prefer quiet, meditative Masses with chants and contemplation.",
+      "Evangelizing and bringing the Gospel to new places excites me.",
+      "Hospitality and building strong faith communities are essential to my spirituality.",
+      "I value discipline and a structured approach to my spiritual life.",
+      "I frequently reflect on my thoughts and emotions to discern God's will.",
+      "I experience God through nature and the beauty of creation.",
+      "I admire saints who lived simply and worked directly with the poor.",
+      "Deep interior prayer and mystical experiences are central to my faith.",
+      "Faith should be lived through action, not just contemplation.",
+      "I feel called to guide and mentor young people in their faith journey.",
+      "I appreciate thought-provoking homilies that challenge me intellectually.",
+      "I see joy, laughter, and community as essential parts of my faith life.",
+      "I feel drawn to missionary work, bringing the Gospel to different places or cultures.",
+      "I believe strong discipline and routine are important in my spiritual growth.",
+      "I often analyze my thoughts and emotions carefully to discern God's plan for me.",
+      "I feel closest to God when I help others grow in knowledge and understanding.",
+      "I prefer a faith experience that is deeply personal and mystical, rather than structured or public.",
+      "I admire saints who were great scholars and defenders of the faith.",
+      "I feel called to defend and explain the faith through reason and dialogue.",
+      "I am passionate about teaching and passing down Church traditions.",
+      "I am inspired by missionaries who travel the world to spread the Gospel.",
+      "I feel closest to God when I spend time in quiet personal prayer rather than communal worship."
+    ];
+
+    const isDev = window.location.hostname === 'localhost';
+    const webhookURL = isDev
+    ? 'http://localhost:5000/webhook'  // local server
+    : 'https://catholic-spirituality.onrender.com/webhook';  // live server
+
+    const questionsDiv = document.getElementById('questions');
+    questions.forEach((text, idx) => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.innerHTML = `
+        <p>Q${idx+1}. ${text}</p>
+        <div class="options">
+          ${[1,2,3,4,5].map(val =>
+            `<input type="radio" id="q${idx+1}_${val}" name="Q${idx+1}" value="${val}" required>
+             <label for="q${idx+1}_${val}">${val}</label>`
+          ).join('')}
+        </div>`;
+      questionsDiv.appendChild(qDiv);
+    });
+
+    document.getElementById('quizForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const res = await fetch(webhookURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      if (json.status !== 'success') return alert('Submission error: ' + json.message);
+
+      document.getElementById('quizForm').style.display = 'none';
+      const { normalized_scores, top_3 } = json;
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('results').innerHTML = `
+        <h2>Your Top Spiritualities</h2>
+        <ol>
+          ${top_3.map(s => `<li>${s[0]} (${s[1]})</li>`).join('')}
+        </ol>
+        <h3>All Scores:</h3>
+        <pre>${JSON.stringify(normalized_scores, null, 2)}</pre>
+      `;
+    });
+  </script>
 </body>
 </html>
