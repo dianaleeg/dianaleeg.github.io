@@ -147,7 +147,7 @@
     </div>
     <button type="submit" id="submitBtn">Submit</button>
   </form>
-  <div id="loadingMessage">Submitting your answers...</div>
+  <div id="loadingMessage">Submitting your answers... This will take about 15 secs.</div>
 
   <div id="results"></div>
 
@@ -208,41 +208,25 @@
       questionsDiv.appendChild(qDiv);
     });
 
-document.getElementById('quizForm').addEventListener('submit', async e => {
-  e.preventDefault();
+  document.getElementById('quizForm').addEventListener('submit', e => {
+    e.preventDefault();
 
-  const submitBtn = document.getElementById('submitBtn');
-  const loadingMsg = document.getElementById('loadingMessage');
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingMsg = document.getElementById('loadingMessage');
 
-  // Disable button and show loading
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Submitting...';
-  loadingMsg.style.display = 'block';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    loadingMsg.style.display = 'block';
 
-  const data = Object.fromEntries(new FormData(e.target).entries());
+    const data = Object.fromEntries(new FormData(e.target).entries());
 
-    try {
-      const res = await fetch(webhookURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+    fetch(webhookURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
 
-      if (res.ok) {
-        window.location.href = "/thankyou.html";
-        return;  // stop execution
-      } else {
-        const result = await res.json();
-        alert("Something went wrong: " + result.message);
-      }
-    } catch (err) {
-      alert("Submission failed: " + err.message);
-    } finally {
-      // Restore button state only if not redirecting
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit';
-      loadingMsg.style.display = 'none';
-    }
+    window.location.href = "/thankyou.html";
   });
   </script>
 </body>
